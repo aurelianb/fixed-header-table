@@ -1,0 +1,29 @@
+%h1 Listing homes
+.table-container2
+  %table.table.table-header-rotated
+    %thead
+      %tr
+        %th
+        - @permissions_list.each do |permission|
+          %th.rotate
+            %div
+              %span=permission.name
+
+    %tbody
+      -58.times do |home|
+        %tr
+          %th.row-header
+            Username
+            = home
+          %td
+            -@permissions_list.each do
+              %td
+          %td.row-header
+            Username
+            = home
+  
+
+%br
+
+:coffee
+  $(".table").floatThead();

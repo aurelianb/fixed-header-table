@@ -1,0 +1,52 @@
+%h1 Listing homes
+
+.table-container
+  %table.table.table-header-rotated#header-fixed
+  %table.table.table-header-rotated
+    %thead
+      %tr
+        %th
+        - @permissions_list.each do |permission|
+          %th.rotate
+            %div
+              %span=permission.name
+
+    %tbody
+      -58.times do |home|
+        %tr
+          %th.row-header
+            Username
+            = home
+          %td
+            -@permissions_list.each do
+              %td
+          %td.row-header
+            Username
+            = home
+  
+
+%br
+
+:coffee
+  # offset original
+  offset = $('.table-header-rotated').offset().top
+  table_header = $('.table-header-rotated > thead').clone()
+
+  # append pe tabela 2, care tine doar thead
+  fixed_header = $('#header-fixed').append(table_header)
+  # luam width-ul de pe primul td din tabela originala (username) 
+  # ca sa aliniem corect 
+  first_row_width = $('.table-header-rotated > tbody > tr:eq(0) > th:eq(0)')[0].getBoundingClientRect().width
+  # min-width pe primul TH de pe tabelul clonat (username placeholder)
+  # ca sa aliniem noul tabel cu tabelul original
+  fixed_header_width = fixed_header.find('th:eq(0)')
+  fixed_header_width.css('min-width', first_row_width + "px")
+
+  $(window).on 'scroll', () ->
+    offset_window = $(this).scrollTop()
+    if (offset_window > offset && fixed_header.is(':hidden'))
+      fixed_header.show()
+    else if (offset_window < offset || offset_window == offset)
+      fixed_header.hide()
+
+
